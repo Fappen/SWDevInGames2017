@@ -5,7 +5,7 @@
   [Tutorial 05](https://github.com/griestopf/Fusee.Tutorial/blob/master/Tutorial05/_images/SceneHierarchy.png))
   - Szene: Header und Root-Child-Liste
   - Node (Aufbau der Hierarchie): Liste von Komponenten und Liste von Kind-Nodes 
-  - Komponente (Container für Nutzdaten): unterschiedliche Typen für unterschiedliche 
+  - Komponente (Container für Nutzdaten): unterschiedliche Typen für unterschiedliche Bestandteile.
 
 - Verwendung der [Such-Funktionalität](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Xene/SceneFinder.cs) in FUSEE's Szenengraphen verstehen.
 
