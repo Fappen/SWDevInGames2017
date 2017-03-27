@@ -81,3 +81,24 @@ Tools Installieren & Umgebung aufbauen
 - [Fusee Tutorials](https://github.com/griestopf/Fusee.Tutorial) nachvollziehen (vor allem Tutorial 05) und Fragen vorbereiten.
 
 - Rect Transform und hierarchischer Aufbau von UIs in Unity verstanden haben (Zusammenhang zwischen Anchor und Position/Größe)
+
+
+## TODO bis zum 3.04.
+
+- ALLE vorangegangenen TODOs erledigen
+
+- Szenengraph für Roboter in _SearchAndFind_ implementiert.
+
+- Mit FUSEE's Suchfunktion einen der Nodes im Szenengraph nach Namen suchen und
+  die Rotation abändern:
+
+  ```C#
+  var forearm = _scene.Children.FindNodes(n => n.Name == "Forearm").First().GetTransform();
+
+  forearm.Rotation = new float3 (3.1415f, 0, 0);
+  ```
+  Gerne auch interaktiv auf Grund von Benutzereingaben.
+  Erklärung dazu in [Tutorial 05](https://github.com/griestopf/Fusee.Tutorial/tree/master/Tutorial05#accessing-scene-properties) nachlesen.
+
+- FREIWILLIG als Programmierübung: eine oder mehrere der leeren Implementierungen
+  in [SimpleMeshes.cs](01_SearchAndFind/Core/SimpleMeshes.cs) mit Leben füllen.  

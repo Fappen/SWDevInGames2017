@@ -46,7 +46,7 @@
 - Verwenden der eingebauten Suchfunktionalität, um die richtigen Rotations-Objekte zu finden
 - Verknüpfen von Rotationen mit Benutzer-Eingaben zur Steuerung des Roboter.
   
-### Notwendige Bestandteile selbst implmentieren
+### Notwendige Bestandteile selbst implementieren
 
 - Eigene Traversierungs-Funktionalität zum Suchen nach Namen, sowie zum Rendern bauen
 - Gemeinsamen Basis-Traversierungs-Algorithmus für Suchen nach Namen UND Rendern implementieren -> Das Visitor Pattern
