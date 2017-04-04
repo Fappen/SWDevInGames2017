@@ -102,3 +102,29 @@ Tools Installieren & Umgebung aufbauen
 
 - FREIWILLIG als Programmierübung: eine oder mehrere der leeren Implementierungen
   in [SimpleMeshes.cs](01_SearchAndFind/Core/SimpleMeshes.cs) mit Leben füllen.  
+
+## TODO bis zum 10.04.
+
+- Verstehen, wie Delegates funktionieren und wie man sie verwendet.
+  - Deklarieren eines Delegate-Typs
+  - Deklarieren von  Variablen/Feldern/Parametern, die Delegates enthalten
+  - Verwenden einer expliziten (benannten) Methode als Delegate
+  - Verwenden einer anonymen Methode als Delegate
+
+- Verstehen, wie Lambdas funktionieren und wie man sie verwendet.
+  - Der `=>` Operator als Methodendeklaration
+  - Parameterliste ohne Typen
+  - Einelementige Parameterliste ohne `(`und `)`
+  - Einzeilige Funktionsrümpfe ohne `{`, `}` und `return`
+
+
+- Literatur dazu:
+  - C#-Programmierhandbuch zu Delegates in
+     [Englisch](https://docs.microsoft.com/en-us/dotnet/articles/csharp/programming-guide/delegates/index) oder 
+     [Deutsch](https://msdn.microsoft.com/de-de/library/ms173171(v=vs.140).aspx).
+  - C#-Programmierhandbuch zu Lambdas in
+    [Englisch](https://docs.microsoft.com/en-us/dotnet/articles/csharp/programming-guide/statements-expressions-operators/lambda-expressions) oder 
+    [Deutsch](https://msdn.microsoft.com/de-de/library/bb397687.aspx).
+  - C# 3.0 cookbook - Chapter 9. Delegates, Events, and Lambda Expressions (kostenlos als E-Book in der 
+    [Bibliothek](http://www.hs-furtwangen.de/willkommen/die-hochschule/zentrale-services/informations-und-medienzentrum/die-bibliotheken.html))
+
