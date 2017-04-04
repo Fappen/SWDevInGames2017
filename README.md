@@ -107,7 +107,7 @@ Tools Installieren & Umgebung aufbauen
 
 - Verstehen, wie Delegates funktionieren und wie man sie verwendet.
   - Deklarieren eines Delegate-Typs
-  - Deklarieren von  Variablen/Feldern/Parametern, die Delegates enthalten
+  - Deklarieren von Variablen/Feldern/Parametern, die Delegates enthalten
   - Verwenden einer expliziten (benannten) Methode als Delegate
   - Verwenden einer anonymen Methode als Delegate
 
@@ -116,7 +116,6 @@ Tools Installieren & Umgebung aufbauen
   - Parameterliste ohne Typen
   - Einelementige Parameterliste ohne `(`und `)`
   - Einzeilige Funktionsrümpfe ohne `{`, `}` und `return`
-
 
 - Literatur dazu:
   - C#-Programmierhandbuch zu Delegates in
@@ -128,3 +127,10 @@ Tools Installieren & Umgebung aufbauen
   - C# 3.0 cookbook - Chapter 9. Delegates, Events, and Lambda Expressions (kostenlos als E-Book in der 
     [Bibliothek](http://www.hs-furtwangen.de/willkommen/die-hochschule/zentrale-services/informations-und-medienzentrum/die-bibliotheken.html))
 
+- Musterlösung nachvollziehen
+  - Aufbau des Roboterszenengraphen mit "Parent-Only"-Nodes zur Festlegung des korrekten Rotationszentrums
+  - Rekursive Traversierung des Szenengraphen mit [`FindNodeByName`](02_SearchAndFindSolved/Core/SearchAndFind.cs#L144).
+
+- Freiwillig
+  - Verstehen, was ein "Closure" im Zusammenhang mit Delegates ist.
+  
