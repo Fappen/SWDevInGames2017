@@ -133,4 +133,10 @@ Tools Installieren & Umgebung aufbauen
 
 - Freiwillig
   - Verstehen, was ein "Closure" im Zusammenhang mit Delegates ist.
-  
+
+## TODO bis zum 24.04.
+
+- Mit der Methode [`PointInTriangle`](https://github.com/FUSEEProjectTeam/Fusee/blob/develop/src/Math/Core/float2.cs#L972)
+  vertraut werden. Ggf. kleinen Test schreiben
+- 03_Pick bauen und [`PickAtPosition`](03_Pick/Core/Pick.cs#L164) implementieren
+
