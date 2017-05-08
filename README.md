@@ -140,3 +140,14 @@ Tools Installieren & Umgebung aufbauen
   vertraut werden. Ggf. kleinen Test schreiben
 - 03_Pick bauen und [`PickAtPosition`](03_Pick/Core/Pick.cs#L164) implementieren
 
+## TODO bis zum 15.05.
+
+- Visitor-Pattern: JSONXporter implementieren
+- Implementierung der Accept-Methoden in die Basis-Klasse
+  - Was passiert?
+  - Warum passierts?
+- Unity: RectTransform ausprobieren & AnchorPoints/Offset-System verstehen
+  - Verschiedene Anwendungsfälle durchprobieren
+    - Rechts/Links Oben/Unten bündig
+    - Größe relativ zu Eltern-Größe
+

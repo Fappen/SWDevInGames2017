@@ -15,7 +15,7 @@ using static Fusee.Engine.Core.Time;
 namespace Fusee.Tutorial.Core
 {
 
-    public class SearchAndFind : RenderCanvas
+    public class Pick : RenderCanvas
     {
         // angle variables
         private static float _angleHorz = M.PiOver4, _angleVert, _angleVelHorz, _angleVelVert;
@@ -95,34 +95,34 @@ namespace Fusee.Tutorial.Core
                                                     },
                                                     SimpleMeshes.CreateCuboid(new float3(20, 100, 20))
                                                 },
-                                                Children = new List<SceneNodeContainer>
+                                Children = new List<SceneNodeContainer>
+                                {
+                                    new SceneNodeContainer
+                                    {
+                                        Name = "Arm03Rot",
+                                        Components = new List<SceneComponentContainer>
+                                        {
+                                            new TransformComponent {Translation=new float3(20, 40, 0),  Rotation = new float3(0.25f, 0, 0), Scale = float3.One},
+                                        },
+                                        Children = new List<SceneNodeContainer>
+                                        {
+                                            new SceneNodeContainer
+                                            {
+                                                Name = "Arm03",
+                                                Components = new List<SceneComponentContainer>
                                                 {
-                                                    new SceneNodeContainer
+                                                    new TransformComponent {Translation=new float3(0, 40, 0),  Scale = float3.One },
+                                                    new MaterialComponent
                                                     {
-                                                        Name = "Arm03Rot",
-                                                        Components = new List<SceneComponentContainer>
-                                                        {
-                                                            new TransformComponent {Translation=new float3(20, 40, 0),  Rotation = new float3(0.25f, 0, 0), Scale = float3.One},
-                                                        },
-                                                        Children = new List<SceneNodeContainer>
-                                                        {
-                                                            new SceneNodeContainer
-                                                            {
-                                                                Name = "Arm03",
-                                                                Components = new List<SceneComponentContainer>
-                                                                {
-                                                                    new TransformComponent {Translation=new float3(0, 40, 0),  Scale = float3.One },
-                                                                    new MaterialComponent
-                                                                    {
-                                                                        Diffuse = new MatChannelContainer { Color = ColorUint.Blue.Tofloat3() },
-                                                                        Specular = new SpecularChannelContainer {Color = ColorUint.White.Tofloat3(), Intensity = 1.0f, Shininess = 4.0f}
-                                                                    },
-                                                                    SimpleMeshes.CreateCuboid(new float3(20, 100, 20))
-                                                                }
-                                                            },
-                                                        }
-                                                    }
+                                                        Diffuse = new MatChannelContainer { Color = ColorUint.Blue.Tofloat3() },
+                                                        Specular = new SpecularChannelContainer {Color = ColorUint.White.Tofloat3(), Intensity = 1.0f, Shininess = 4.0f}
+                                                    },
+                                                    SimpleMeshes.CreateCuboid(new float3(20, 100, 20))
                                                 }
+                                            },
+                                        }
+                                    }
+                                }
                                             },
                                         }
                                     }
@@ -147,31 +147,75 @@ namespace Fusee.Tutorial.Core
             {
                 if (child.Name == NameToFind)
                     return child;
-                else
-                {
-                    if (child.Children != null)
-                    {
-                        var found = FindNodeByName(child.Children, NameToFind);
-                        if (found != null)
-                            return found;
-                    }
-                }
+               
+                    if (child.Children == null) continue;
+                    var found = FindNodeByName(child.Children, NameToFind);
+                    if (found != null)
+                        return found;
             }
             return null;
         }
 
+
+        private static SceneNodeContainer PickAtPosition(IEnumerable<SceneNodeContainer> listToSearchIn, float2 pickPosition, float4x4 mvp)
+        {
+            foreach (var child in listToSearchIn)
+            {
+                // foreach Component
+                //    on TransformComponent:
+                //       Accumulate transformation
+                //       e.h. mvp = mvp * transformComponent.Matrix()
+                //    on MeshComponent
+                //       foreach Triangle in Mesh
+                //          Transform triangle with mvp
+                //          test if pickPosition is in transformed triangle.
+
+                
+                var currentTransformComponent = child.GetComponent<TransformComponent>();
+                mvp *= currentTransformComponent.Matrix(); // TODO: Replace mvp *= ... with Viserator
+
+                var currentMeshComponent = child.GetComponent<MeshComponent>();
+                if (currentMeshComponent != null)
+                {
+                    for (var i = 0; i < currentMeshComponent.Triangles.Length; i += 3)
+                    {
+#if DEBUG
+                        Diagnostics.Log(
+                            $"First triangle from current Mesh Component {currentMeshComponent.Triangles[i + 0]}");
+#endif
+
+                        var a = new float4(currentMeshComponent.Vertices[currentMeshComponent.Triangles[i + 0]], 1).TransformPerspective(mvp);
+                        var b = new float4(currentMeshComponent.Vertices[currentMeshComponent.Triangles[i + 1]], 1).TransformPerspective(mvp);
+                        var c = new float4(currentMeshComponent.Vertices[currentMeshComponent.Triangles[i + 2]], 1).TransformPerspective(mvp);
+
+                        float u;
+                        float v;
+                        // Check
+                        if (!float2.PointInTriangle(a.xy, b.xy, c.xy, pickPosition, out u, out v)) continue;
+
+#if DEBUG
+                        Diagnostics.Log($"u: {u}, v: {v}");
+#endif
+                        // Point is in Triangle
+                        child.GetMaterial().Diffuse.Color = float3.Zero;
+                    }
+                }
+
+                if (child.Children == null) continue;
+
+                    var found = PickAtPosition(child.Children, pickPosition, mvp);
+                    if (found != null)
+                        return found;
+            }
+            return null;
+        }
+
+
+
+
         // Init is called on startup. 
         public override void Init()
         {
-            var green = ColorUint.Green.Tofloat3();
-            var blue = ColorUint.Blue.Tofloat3();
-            var cyan = ColorUint.Cyan.Tofloat3();
-            var magenta = ColorUint.Magenta.Tofloat3();
-            var yellow = ColorUint.Yellow.Tofloat3();
-            var white = ColorUint.White.Tofloat3();
-            // var red = ColorUint.Red.Tofloat3();
-
-
             // Set the clear color for the backbuffer to white (100% intentsity in all color channels R, G, B, A).
             RC.ClearColor = new float4(1, 1, 1, 1);
 
@@ -236,12 +280,20 @@ namespace Fusee.Tutorial.Core
             _angleHorz += _angleVelHorz;
             _angleVert += _angleVelVert;
 
-
-
             // Create the camera matrix and set it as the current ModelView transformation
             var mtxRot = float4x4.CreateRotationX(_angleVert) * float4x4.CreateRotationY(_angleHorz);
             var mtxCam = float4x4.LookAt(0, 20, -600, 0, 0, 0, 0, 1, 0);
             RC.ModelView = mtxCam * mtxRot;
+
+            // Pick it !
+            if (Mouse.LeftButton)
+            {
+                PickAtPosition(_scene.Children,
+                    Mouse.Position * new float2(2.0f / Width, -2.0f / Height) + new float2(-1, 1),
+                    RC.Projection * RC.ModelView);
+            }
+
+
 
             // Arms
             _upperAngle += _upperArmVel;
