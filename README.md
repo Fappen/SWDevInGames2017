@@ -151,3 +151,51 @@ Tools Installieren & Umgebung aufbauen
     - Rechts/Links Oben/Unten bündig
     - Größe relativ zu Eltern-Größe
 
+## TODO bis zum 22.05
+
+- SceneRenderer:
+  - Methode RenderRectTransform(RectTransformComponent rtc) als Visitor einfügen
+  - State des SceneRenderer um UiRect (vom Typ MinMaxRect) erweitern. Dazu:
+    - anschauen, wie der Model-Stack im State des SceneRenderer implementiert ist 
+    - Implementierung von RendererState.Model kopierern,
+    - Nutzdaten-Typ von Matrix (float4x4) auf MinMaxRect ändern.
+  - Implementierung von RenderRectTransform:
+    - Neues UiRect = Anchor skaliert mit altem UiRect + Offsets
+    - Aus neuem UiRect Matrix erzeugen und diese als _state.Model setzen. 
+  
+
+Für 22.05:
+Pseudocode für Implementierung RenderRectTransform
+
+```C#
+public void RenderRectXForm(RectTransformContainer rectXForm)
+{
+    // Get Center and Size of current rect transform (the area of our parent)
+    float2 oldCenter = _state.UiRect.Center;
+    float2 oldSize = _state.UiRect.Size;
+        
+    // Calculate inverse transformation matrix from current rect transform            
+    float4x4 invOldRectMtx = float4x4.CreateScale(1.0f / oldSize.x, 1.0f/oldSize.y, 1)
+                                  * float4x4.CreateTranslation(-1.0f * oldCenter);
+
+    // The Heart of the UiRect calculation: Set anchor points relative to parent
+    // rectangle and add absolute offsets
+    MinMaxRect newRect = new MinMaxRect();
+    newRect.Min = UiREct.Min * rectXForm.Anchors.Min + rectXForm.Offsets.Min;
+    newRect.Max = UiREct.Max * rectXForm.Anchors.Max + rectXForm.Offsets.Max;
+
+    float2 newCenter = NewRect.Center;
+    float2 newSIze = NewRect.Size;
+    
+    // Calculate inverse transformation matrix from current rect transform            
+    float4x4 newRectMtx = float4x4.CreateTranslation(newCenter) *
+                                float4x4.CreateScale(newSize.x, newSize.y, 1);
+
+    // Set the new transform rectangle (our own area) for children down the hierarchy
+    _state.UiRect = newRect;
+
+    // Set the current transformation to map the unit square in x/y to the current 
+    // 
+    _state.Model *= invOldRectMtx * newRectMtx;
+}  
+```
