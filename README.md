@@ -13,7 +13,7 @@
 - Managed Sprachen im allgemeinen
 - Reflection
 - Generics/Container/Iterator
-- Reflection/DependencyInjection/DoubleDispatch
+- DoubleDispatch
 - Events/Delegates/Anonymous methods
 - Lambdas, evtl. LINQ
 - Concurrency/Threads/Async&Await
@@ -199,3 +199,4 @@ public void RenderRectXForm(RectTransformContainer rectXForm)
     _state.Model *= invOldRectMtx * newRectMtx;
 }  
 ```
+
