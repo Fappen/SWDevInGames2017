@@ -8,15 +8,18 @@
  - Kollaborative Erarbeitung einer größeren Feature-Set in Kleingruppen
  - PROGRAMMIEREN KÖNNEN
 
-## Inhalte
+## Klausurrelevante Themen
 
-- Managed Sprachen im allgemeinen
-- Reflection
-- Generics/Container/Iterator
-- DoubleDispatch
-- Events/Delegates/Anonymous methods
-- Lambdas, evtl. LINQ
-- Concurrency/Threads/Async&Await
+- X01: Memory-Layout, struct vs. class, virtual Methoden 
+  - Einführung am 22.05
+  - [Script-Einträge](X01/)
+- X02: Events, Delegates, Anonymous methods, Lambdas
+  - Einführung am 29.05
+- X03: Generics, Container, Iterator
+  - Einführung am 12.06
+- X04: Reflection/Double Dispatch/Visitor Pattern
+  - Reflection: Einführung am 19.06
+
 
 ## Struktur der Veranstaltung
 
