@@ -15,6 +15,7 @@
   - [Script-Einträge](X01/)
 - X02: Events, Delegates, Anonymous methods, Lambdas
   - Einführung am 29.05
+  - [Script-Einträge](X02/)
 - X03: Generics, Container, Iterator
   - Einführung am 12.06
 - X04: Reflection/Double Dispatch/Visitor Pattern
