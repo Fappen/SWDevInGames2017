@@ -56,7 +56,7 @@ namespace X02_Callbacks
             int theResult = 0;
             var calc = new Calculator();
             calc.PR += delegate (int done) { Console.WriteLine($"Calculating. {done}% already done."); };
-            calc.PR += percent => Console.WriteLine($"============= ANOTHER TENTH OF THE WORK DONE ============="); ;
+            calc.PR += percent => { if (percent % 10 ==0) Console.WriteLine($"============= ANOTHER TENTH OF THE WORK DONE ============="); };
             calc.RR += r => theResult = r;
 
             Console.WriteLine("Starting the calculation");
