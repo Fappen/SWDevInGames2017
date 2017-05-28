@@ -32,7 +32,7 @@ namespace Fusee.Tutorial.Core
         {
             return new SceneContainer
             {
-                Header = new SceneHeader
+                Header = 
                 {
                     CreationDate = "May 2017",
                     CreatedBy = "mch",
@@ -46,18 +46,23 @@ namespace Fusee.Tutorial.Core
                         Name = "Parent",
                         Components = new List<SceneComponentContainer>
                         {
-                            new TransformComponent {Scale = new float3(1, 1.5f, 1)},
+                            new RectTransformComponent
+                            {
+                                Anchors = {Min = {x=0, y=0},   Max = {x=0, y=0}},
+                                Offsets = {Min = {x=-1, y=-1}, Max = {x=1, y=1}}
+                            },
+                            // new TransformComponent {Scale = new float3(1, 1.5f, 1)},
                             new MaterialComponent
                             {
-                                Diffuse = new MatChannelContainer {Color = ColorUint.Green.Tofloat3()},
+                                Diffuse = new MatChannelContainer{Color = ColorUint.Tofloat3(ColorUint.Green)},
                                 Specular = new SpecularChannelContainer
                                 {
-                                    Color = ColorUint.White.Tofloat3(),
+                                    Color = ColorUint.Tofloat3(ColorUint.White),
                                     Intensity = 1.0f,
                                     Shininess = 4.0f
                                 }
                             },
-                            SimpleMeshes.CreateCuboid(new float3(8, 6, 0.7f))
+                            SimpleMeshes.CreateCuboid(new float3(2, 2, 0.7f))
                         },
                         Children = new List<SceneNodeContainer>
                         {
@@ -66,13 +71,18 @@ namespace Fusee.Tutorial.Core
                                 Name = "Child",
                                 Components = new List<SceneComponentContainer>
                                 {
-                                    new TransformComponent {Translation = new float3(1, 1, 0), Scale = new float3(1, 1, 1)},
+                                    new RectTransformComponent
+                                    {
+                                        Anchors = {Min = {x=0, y=0},   Max = {x=1, y=1}},
+                                        Offsets = {Min = {x=-0, y=0},  Max = {x=0, y=0}}
+                                    },
+                                    // new TransformComponent {Translation = new float3(1, 1, 0), Scale = new float3(1, 1, 1)},
                                     new MaterialComponent
                                     {
-                                        Diffuse = new MatChannelContainer {Color = ColorUint.Red.Tofloat3()},
+                                        Diffuse = new MatChannelContainer {Color = ColorUint.Tofloat3(ColorUint.Red)},
                                         Specular = new SpecularChannelContainer
                                         {
-                                            Color = ColorUint.White.Tofloat3(),
+                                            Color = ColorUint.Tofloat3(ColorUint.White),
                                             Intensity = 1.0f,
                                             Shininess = 4.0f
                                         }
