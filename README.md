@@ -18,8 +18,12 @@
   - [Script-Einträge](X02/)
 - X03: Generics, Container, Iterator
   - Einführung am 12.06
-- X04: Reflection/Double Dispatch/Visitor Pattern
-  - Reflection: Einführung am 19.06
+  - [Script-Einträge](X03/)
+- X04: Nebenläufigkeit APM, EAP, TAP
+  -  Einführung am 19.06.
+
+ZUDEM
+- Double-Dispatch / Visitor-Pattern, wie in den Veranstaltungen bis Mitte Mai besprochen
 
 
 ## Struktur der Veranstaltung
