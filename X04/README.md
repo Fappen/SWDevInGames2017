@@ -21,7 +21,7 @@ Bildschirm laufen lässt. Gleichzeitig kann ein 3D-Modell interaktiv bewegt werd
 Ein Button in der oberen linken Fensterecke lädt eine Textdatei mit langem Inhalt (Shakespear's gesammelte
 Werke) aus dem Web, um diesen, sobald er geladen wurde, im Ticker anzuzeigen.
 
-In der Datei [Main.cs](Desktop/Main.cs#63) des Desktop-Build ist ab Zeile 63 die Implementierung des Ladens
+In der Datei [Main.cs](X04_Async/Desktop/Main.cs#63) des Desktop-Build ist ab Zeile 63 die Implementierung des Ladens
 der Textdatei als Reaktion auf den Button-Click in drei Varianten implementiert.
 
 

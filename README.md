@@ -19,8 +19,9 @@
 - X03: Generics, Container, Iterator
   - Einführung am 12.06
   - [Script-Einträge](X03/)
-- X04: Nebenläufigkeit APM, EAP, TAP
+- X04: Nebenläufigkeit (APM), EAP, TAP
   -  Einführung am 19.06.
+  - [Script-Einträge](X04/)
 
 ZUDEM
 - Double-Dispatch / Visitor-Pattern, wie in den Veranstaltungen bis Mitte Mai besprochen
