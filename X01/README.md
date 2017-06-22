@@ -53,7 +53,7 @@ Bei Arrays, Listen oder anderen Containern wird ebenfalls ein neuer Speicherbere
 durch den Index (oder das indizierende Objekt) und die rechte durch die Nutzdaten belegt werden.
 
 > **TODO**
-> - Legt jeweils einen Arry von `Cat`s und `Pair`s an und zeichnet das Memory-Layout.
+> - Legt jeweils einen Array von `Cat`s und `Pair`s an und zeichnet das Memory-Layout.
 
 In C# hängt es vom Datentyp ab, ob eine Variable by Value oder by Reference gehandhabt wird:
 
