@@ -26,8 +26,8 @@ Zweispaltige Tabelle: Linke Spalte: Identifizierer (Variablen-, Klassenvariablen
 Folgender Code
 
 ```C#
-class Pair { int one; int two }
-struct Cat { string name; int age }
+struct Pair { int one; int two }
+class Cat { string name; int age }
 ...
 float a = 2;
 Pair p = new Pair {one = 47, two = 11};

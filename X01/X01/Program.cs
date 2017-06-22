@@ -8,13 +8,13 @@ namespace X01
     class Program
     {
 
-        class Pair
+        struct Pair
         {
             public int one;
             public int two;
         }
 
-        struct Cat
+        class Cat
         {
             public string name;
             public int age;
