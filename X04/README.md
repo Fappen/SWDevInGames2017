@@ -1,9 +1,9 @@
 
 # Async-Example
 
-Demonstriert die Notwendigkeit, lange dauernde Prozesse in nebenläufige Aktivitäten
-auszulagern, um ein ruckelfreies Rendering zu gewährleisten.
-Zeigt die drei verschiedenen Patterns, die in C#/.NET existieren: 
+Dieses Code-Beispiel demonstriert die Notwendigkeit, lange dauernde Prozesse in nebenläufige Aktivitäten
+auszulagern, um ein ruckelfreies Rendering zu gewährleisten. Es zeigt zwei der drei verschiedenen
+Patterns, die in C#/.NET existieren: 
 
 - Asynchronous Programming Model (APM)
 - Event-based Asynchronous Pattern (EAP)
@@ -29,9 +29,9 @@ der Textdatei als Reaktion auf den Button-Click in drei Varianten implementiert.
 
 Die erste Implementierung ist ein synchroner Download, d.h. Sobald der Button geklickt wurde, 
 wird der Download gestartet und erst wenn der Text vollständig heruntergeladen wurde, fährt die
-Anwendung mit dem Rendern der visuellen Inhalte fort. Die Klasse `WebClient` erlaubt das
-synchrone Herunterladen einer Textdatei und Zurückliefern in Form eines Strings mit 
-der Methode `DownloadString`
+Anwendung mit dem Rendern der visuellen Inhalte fort. Während des Ladevorgangs scheint die Applikation
+eingefroren. Die Klasse `WebClient` erlaubt das synchrone Herunterladen einer Textdatei und
+Zurückliefern in Form eines Strings mit der Methode `DownloadString`
 
 ```C#
     WebClient client = new WebClient();
@@ -45,13 +45,22 @@ Pfeiltasten, das Modell dreht und gleichzeitig das Laden des Textes per Button i
 wird die Bewegung des 3D-Modells für die Zeit des Herunterladens angehalten. 
 
 Gerade in stark interaktiven Umgebungen wie Echtzeit 3D-Visualisierungen sollte das fortwährende
-Rendern unbedingt gewährleistet sein. Daher sollten zeitintensive Aktionen wie das Laden von Daten
-der umfangreiche Berechnungen in nebenläufige Threads ausgelagert werden.
+Rendern unbedingt gewährleistet sein. Daher sollten zeitintensive Aktionen, wie das Laden von Daten
+oder umfangreiche Berechnungen, in nebenläufige Threads ausgelagert werden.
 
 Neben der Möglichkeit, direkt mit den vom Betriebssystem zur Verfügung gestellten Threads
-zu arbeiten, bietet C# bietet eine Reihe von Möglichkeiten an, mit programmiertechnsich einfacherer
+zu arbeiten, bietet C# eine Reihe von Möglichkeiten an, mit programmiertechnsich einfacherer
 Herangehensweise Nebenläufigkeit (die hier auch oft _Asynchronizität_ genannt wird), zu erzeugen. 
-Die drei Möglichkeiten sind in oben genanntem Artikel beschrieben.
+Die drei Möglichkeiten sind in oben genanntem Artikel beschrieben und bieten Erleichterung
+vor allem für das Starten nebenläufiger Aktionen, sowie das Ausführen von Code 
+_nach dem Beenden_ nebenläufiger Aktionen (bei denen meist auf das Ergebnis der
+nebenläufigen Aktion zugegriffen werden soll). Für klassische Programmier-Beispiele für Nebenläufigkeit,
+bei der es oft um eine _Synchronisierung_ der nebenläufigen Aktionen geht, wie z.B. das 
+[Dining Philosophers Problem](https://de.wikipedia.org/wiki/Philosophenproblem),
+werden von diesen Patterns nicht auf spezielle Art unterstützt. Diese Art der Nebenläufigkeit 
+muss auch in C# mit den 
+[klassischen Mitteln der Thread-Synchronisierung](https://msdn.microsoft.com/de-de/library/ms228964(v=vs.110).aspx)
+ gelöst werden.
 
 Ein Großteil von der .NET-Library zur Verfügung gestellten Funktionalität wird in einem oder 
 mehreren der o.g. Patterns bereitgestellt, wenn diese Funktionalität eine lange Auführungszeit
@@ -63,9 +72,9 @@ Klasse.
 ### Asynchronous Programming Model (APM)
 
 Das APM ist historisch zu betrachten und wird nicht mehr unterstützt, daher ist es in diesem
-Code-Beispiel auch nicht implementiert. APM-Methoden daran erkennbar, dass für eine
-Aktion jeweils ein Paar von Methoden implmentiert ist, die dem Namensschema
-`BeginAktion()` und `EndAktion()` folgen, wobei die `Begin...()`-Methode ein Objekt zurückgibt, 
+Code-Beispiel auch nicht implementiert. APM-Methoden sind daran erkennbar, dass für eine
+Aktion jeweils ein Paar von Methoden implmentiert ist, das dem Namensschema
+`BeginAktion()` und `EndAktion()` folgt, wobei die `Begin...()`-Methode ein Objekt zurückgibt, 
 das das Interface `IAsyncResult` implmenentiert.
 
 
@@ -106,8 +115,11 @@ EA-Pattern mit der Methode `DownloadStringAsync`
 Aus Sicht von Anwendungsprogrammierern ist das EAP nicht immer einfach zu verwenden:
 Im Programmcode, der eine asynchrone Operation aufruft muss _zuerst_ der Event-Handler
 angegeben werden, in dem beschrieben ist, was passiert, wenn die Aktion _beendet_ ist.
+_Danach_ wird im Programmcode erst die eigentliche Aktion _gestartet_. Der Zugriff auf ein
+während der asynchronen Aktion generiertes Ergebnis erfolgt etwas versteckt über ein Feld
+`Result` des EventArg-Typs.
 
-_Danach_ wird im Programmcode erst die eigentliche Aktion _gestartet_. Für eine einzelne
+Für eine einzelne
 Aktion mag dieser Aufwand noch gut handhabbar sein. Schwierig wird es, wenn mehrere
 Asynchrone Aktionen als Kette oder in baumartiger Struktur mit verschachtelten 
 Abhängigkeiten gestartet (und beendet) werden sollen. 
@@ -126,13 +138,18 @@ ein Ergebnis liefert, erlaubt es diese erweiterte Syntax, den Aufruf direkt in e
 an eine Variable des Typs `T` zu verpacken. Direkt an den Anschluss des Aufrufs mit `await`
 kann dann auf das Ergebnis zugegriffen werden, so dass die Code-Struktur nahezu wie
 ein synchroner Aufruf aussieht. Der Compiler separiert allerdings den Code _vor_ und
-_hinter_ dem Schlüsselwort `await` derart, dass ein asynchroner Aufruf der Aktion entsteht
-und der Code hinter `await` erst nach Beendigung der nebenläufigen Aktion erfolgt.
+_hinter_ dem Schlüsselwort `await` derart, dass ein asynchroner Aufruf der Aktion entsteht,
+die Methode also direkt beendet wird
+und der Code hinter `await` erst nach Beendigung der nebenläufigen Aktion ausgeführt wird.
 
 Die Methode, die den asynchronen Aufruf enthält, kann nun bei der Deklaration mit dem 
 als Modifizierer wirkenden Schlüsselwort `async` markiert werden, was dann dazu führt,
 dass diese Methode unmittelbar nach dem mittels `await` markierten Aufruf beendet
 wird und damit der Kontrollfluss nicht für längere Zeit unterbrochen wird.
+
+Dieser Mechanismus funktioniert auch über mehrere `await`-Aufrufe hinweg, die dann scheinbar
+zwar asynchron aufgerufen werden, die Weiterbearbeitung der Ergebnisse allerdings 
+automatisch synchronisiert wird. 
 
 Die Klasse `WebClient` erlaubt das
 asynchrone Herunterladen einer Textdatei und Zurückliefern in Form eines Strings nach dem 
@@ -152,5 +169,5 @@ TA-Pattern mit der Methode `DownloadStringTaskAsync`
 
 Während der Code im Methodenrumpf nun nahezu wie ein synchroner Aufruf aussieht, muss 
 die Methode selbst mit `async` deklariert werden, damit der Mechanismus der Code-Separation
-vor und nach `await` funktioniert
+vor und nach `await` funktioniert. Das klappt auch, wie im Beispiel, mit anonymen Methoden.
 

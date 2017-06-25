@@ -147,7 +147,7 @@ Forderungen implementiert.
     calc.RR += ReceiveResult;
   ```
 
-- Um zu demonstieren, dass ein Event nun mehr als nur eine Callback-Methode handhaben kann, wurd der 
+- Um zu demonstieren, dass ein Event nun mehr als nur eine Callback-Methode handhaben kann, wurde der 
   `ReportProgress` Event mit zwei Callbacks (nun _Event-Listener_ genannt) versehen.
 
 Events sind, neben Methoden, Feldern und Properties also eine vierte Möglickeit, Klassen mit Eigenschaften

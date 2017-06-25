@@ -209,3 +209,34 @@ public void RenderRectXForm(RectTransformContainer rectXForm)
 }  
 ```
 
+## Klausurvorbereitung
+
+Mögliche Aufgaben
+
+### X01
+
+-	Memory-Layout-Bild zeichnen oder vervollständigen
+- Unterschied zwischen class und struct beschreiben können, ggf. als Memory-Layout-Bild darstellen können
+- Abkürzende Initialisierungs-Schreibweise von C# verstanden haben
+- Aufruf-Verhalten von virtual/override vs. Nicht-virtuell verstanden haben
+
+### X02
+
+- Implementierung von Callbacks mit den dargestellten Techniken (virtual, interface, delegate, event) in jeweils andere Technik umwandeln können: Insbesondere Implementierung mit Interface in Implementierung mit delegate/event (relevant bei Portierungen von Java nach C#)
+
+### X03
+
+- Einen einfachen generischen Container-Datentyp, der intern Daten-Objekte in einem Array speichert selbst implementieren können (z.B. als Lücken-Text: Teile sind vorgegeben, Teile müssen selbst implementiert werden).
+- Einen einfachen Container-Datentyp um Zugriffs-Strategien wie z.B. Stack-Funktionalität erweitern können
+-	Einen einfachen Container-Datentyp um Speicher-Strategien wie z.B. das bereits nach bestimmten Kriterien sortierte Abspeichern erweitern können
+-	Eine Container-Klasse mit Hilfe von yield return enumerierbar machen können
+-	In einer bestehenden Container-Klasse einen indexer implementieren können
+
+### X04
+
+- In einer Aufruf-Sequenz einer oder mehrerer asynchroner Methoden (mit async/await), die mit Konsolen-Ausgaben gespickt ist, die Reihenfolge der Ausgaben angeben können.
+
+### „X05“: Double-Dispatch/Visitor
+
+- Eine bestehende einfachen Beispiel-Klassen-Menge, die bereits das Visitor-Pattern implementiert, um einen weiteren Visitor erweitern können
+- Anhand einer bestehenden Beispiel-Klassen-Menge, die bereits das Visitor-Pattern implementiert, erklären können, wo jeweils die beiden „Dispatches“ auftreten, also wo auf Grund welchen Typs entschieden wird, welche Methode aufgerufen wird.

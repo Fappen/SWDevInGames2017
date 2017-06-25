@@ -2,9 +2,9 @@
 
 ## Generics & Container
 
-Wie die meisten aktuellen objektorientierten Sprachen erlaubt es C#, bei die Deklaration von Datentypen so 
-offen zu halten, dass in der Deklaration verwendete andere Datentypen noch nicht konkret bekann sein müssen,
-sondern als Typ-Parameter verwendet werden können.
+Wie die meisten aktuellen objektorientierten Sprachen erlaubt es C#, die Deklaration von Datentypen so 
+offen zu halten, dass in der Deklaration verwendete andere Datentypen noch nicht konkret bekannt sein
+müssen, sondern als Typ-Parameter verwendet werden können.
 
 Solche -noch nicht ganz fertige- Datentypen, die andere Datentypen verwenden, sich hierbei aber noch nicht
 ganz festlegen, welche Typen das denn sein sollen, nennt man in C# (und in Java) _Generics_.  In C++ werden 
@@ -29,7 +29,7 @@ Zugriffsstrategien. Hier einige Beispiele:
 - Dictionaries / Hash-Tables: Indizierung mit beliebigen Schlüssel-Werten (nicht nur Integer-Indizes wie bei
   Arrays oder Listen).
 
-Die Implementierung einer solchen Klasse wie z.B. List sollte dabei völlig losgelöst vom Typ der 
+Die Implementierung einer solchen Klasse, wie z.B. `List`, sollte dabei völlig losgelöst vom Typ der 
 Objekte, die in der Liste gehalten werden, sein. So soll es möglich sein, eine Liste mit strings, 
 eine Liste mit double-Werten und eine Liste mit selbst definierten Datentypen (ggf. sogar Delegates)
 zu verwenden.
@@ -44,7 +44,7 @@ Elementen enthalten kann. Die Elemente werden in einem Array von `object` Elemen
 Sobald dessen Kapazität erreicht ist, wird die Anzahl der Array-Einträge verdoppelt
 
 ```C#
-   public class MyContainer
+    public class MyContainer
     {
         private object[] _theObjects;
         private int _n;
@@ -177,7 +177,8 @@ bestimmte Anforderungen gestellt. Man stelle sich eine Containerklasse vor, die 
 Anordnung enthält.
 
 Dazu muss dem Compiler mitgeteilt werden, dass nur bestimmte Kategorien von Typen für den Ersatz 
-von `T` erlaubt sind. Das geht mit der Einschränkung mit dem Schlüsselwort `where`:
+von `T` erlaubt sind, nämlich solche, die sich miteinander vergleichen lassen. Das geht mit der
+Einschränkung mit dem Schlüsselwort `where`:
 
 In folgendem Beispiel wird gefordert, dass der Datentyp, der für T verwendet wird, das Interface
 `IComparable` implementieren muss:
@@ -250,11 +251,11 @@ In Containerklassen kann ein wahlfreier Zugriff zunächst über Methoden wie z.B
 > - Erweitert die (nicht-sortiert speichernde) Klasse `MyContainer` um die 
 >   Methode `SetAt(T o, int index)`. (`GetAt` existiert ja bereits).
 
-Um selbst definierten Containern die mit einem Index einen wahlfreien Zugriff auf die enthaltenen Elemente
+Um selbst definierten Containern, die mit einem Index einen wahlfreien Zugriff auf die enthaltenen Elemente
 ermöglichen sollen, die gleiche elegante Eckige-Klammer-Syntax wie bei Arrays zu eröffnen, kann einer
-auf einer Containerklasse ein Indexer deklariert werden. Ein Indexer ist dabei eine spezieller Form einer
-"Eigenschaft", also ein Klassen-Bestandteil, der nach außen aussieht wie ein Feld, aber eine Set- und eine
-Get-Methode deklariert, die bei Zuweisung oder beim Auslesen verwendet werden. 
+Containerklasse ein Indexer hinzugefügt werden werden. Ein Indexer ist dabei eine spezieller Form einer
+"Eigenschaft" (Property), also ein Klassen-Bestandteil, der nach außen aussieht wie ein Feld, aber 
+eine Set- und eine Get-Methode deklariert, die bei Zuweisung oder beim Auslesen aufgerufen werden. 
 
 Das [C#-Programmierhandbuch](https://docs.microsoft.com/de-de/dotnet/csharp/programming-guide/indexers/index)
 enthält die allgemeine Deklaration eines Indexers - hier schon mit dem generischen Parameter T:
@@ -283,6 +284,7 @@ enthält die allgemeine Deklaration eines Indexers - hier schon mit dem generisc
 
 Mit dem Indexer lassen sich nun Container bequem innerhalb von Schleifen beschreiben und auslesen, 
 Dazu muss die Schleife mit einer Zählvariabeln konstruiert worden sein:
+
 ```C#
   for (int i= 0; i < container.Count; i++)
   {
@@ -291,8 +293,9 @@ Dazu muss die Schleife mit einer Zählvariabeln konstruiert worden sein:
 ``` 
 
 Nicht immer sollen Container aber wahlfreien Zugriff (über einen Index) bieten. Sehr oft genügt
-es (oder es ist gar nicht anders möglich), sequenziellen Zugriff auf die Inhalte zu ermögliche, 
-d.h. Benutzer sollen in einer vom Container vorgegebenen Reihenfolge sämtliche im Container
+es (oder es ist gar nicht anders möglich), sequenziellen Zugriff auf die Inhalte zu ermöglichen. 
+Dabei können  Benutzer in einer vom Container vorgegebenen Reihenfolge (und nicht in einer selbst
+definierten Reihenfolge, wie sämtliche im Container
 gespeicherten Inhalte in einer Schleife durchlaufen können.
 
 Diese gegenüber dem wahlfreien Zugriff "abgespeckte" Form, kann in C# mit dem speziellen `foreach`-
@@ -335,10 +338,10 @@ Der Umgang mit Enumeratoren ist also aus Anwendersicht durch die Compiler-Unters
 mit `foreach` sehr angenehm. Aus Sicht eines Entewicklers, der seine  Container-Klasse 
 um die Enumerierbarkeit erweitern will ist es ein mittlerer Alptraum, denn
 
-- Er muss sein Klasse das Interface `IEnumerable` implementieren lassen, d.h. die 
+- Er muss seine Container-Klasse das Interface `IEnumerable` implementieren lassen, d.h. die 
   Methode `GetEnumerator()` hinzufügen.
-- Deren Rückgabewert muss ein neu zu erstellender Datentyp sein, der `IEnumerator` 
-  implementiert. Dieser Datentyp muss deklariert werden. 
+- Deren Rückgabewert muss ein neu zu erstellender Datentyp sein, der das Interface `IEnumerator` 
+  implementiert. Dieser Datentyp muss implementiert werden. 
 - Die Implementierung dieses Datentyps muss oben genannte Bestandteile `Current`, 
   `MoveNext()` und `Reset()` enthalten.
 - Diese Methoden müssen irgendwie auf das ursprüngliche Container-Objekt zugreifen.
@@ -346,10 +349,11 @@ um die Enumerierbarkeit erweitern will ist es ein mittlerer Alptraum, denn
   in zwei Geschmacksrichtungen implmentiert werden: Einmal ohne generischen Parameter 
   und einmal mit dem generischen Parameter unseres Inhaltstyps `T`.
 
-Die gute Nachricht ist: Es gibt auch Compiler-Unterstützung für die Implementierung
-von Enumerierbarkeit. C# bietet das Schlüsselwort `yield`, bzw. `yield return` mit dem sich
+Die gute Nachricht ist: neben der Compiler-Unterstützung für die _Anwendung_ von Enumerierbarkeit
+(in Form der `foreach`-Schleife), gibt es auch Compiler-Unterstützung für die _Implementierung_
+von Enumerierbarkeit: C# bietet das Schlüsselwort `yield`, bzw. `yield return` mit dem sich
 so genannte Co-Routinen implementieren lassen. Kurz gesagt sind das Methoden,
-die an einer bestimmten Stelle unterbrechen lassen und dann beim nächsten Aufruf
+die sich an einer bestimmten Stelle unterbrechen lassen und dann beim nächsten Aufruf
 ihre Arbeit dort fortsetzen, wo sie unterbrochen wurden.
 
 Statt also oben angegebene Liste abzuarbeiten, kann unsere Klasse `MyContainer` auch 
@@ -392,7 +396,7 @@ auf folgende Art enumerierbar gemacht werden
 
 ### Wo geht `yield` nicht/schlecht?
 
-Leider bietet die komfortable Möglichkeit mit `yield return` Enumerierbarkeit zu implementieren
+Leider bietet die komfortable Möglichkeit, mit `yield return` Enumerierbarkeit zu implementieren,
 nicht bei allen Formen der internen Speicherung von Element-Daten eine gute Lösung.
 
 Ein Beispiel hierfür ist die Speicherung in Bäumen: Werden Elemente z.B. in einem 
@@ -400,8 +404,8 @@ binären (oder auch anders strukturierten) Baum gehalten, gibt es irgendwo eine
 rekursive Struktur (Knoten im Baum können wiederum Knoten oder Listen von Knoten enthalten)
 
 Es gibt zwar grundsätzlich die Möglichkeit, mit `yield return` auch über mehrere
-Rekursionstufen hinweg zu traversieren, dies führt aber zu wenig performantem Code.
-Leider ist die direkte Implementierung eines Enumerators noch komplexer, da hier nicht
+Rekursionsstufen hinweg zu traversieren, dies führt aber zu wenig performantem Code.
+Leider ist die direkte Implementierung eines Enumerators noch komplexer, da hier 
 überhaupt nicht mit Rekursion gearbeitet werden kann. Stattdessen muss der aktuelle 
 Traversierungs-Stand (welcher Knoten in welcher Hierarchiestufe wird gerade traversiert)
 explizit z.B. in einer Stack-artigen Struktur gehalten werden.
